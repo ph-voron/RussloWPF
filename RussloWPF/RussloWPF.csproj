@@ -119,6 +119,7 @@
     <Compile Include="Commands\NavigateToLoginPageCommand.cs" />
     <Compile Include="Commands\RequestDeleteBook.cs" />
     <Compile Include="Data\AppData.cs" />
+    <Compile Include="IBookItemsListManager.cs" />
     <Compile Include="IMainWindow.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

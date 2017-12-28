@@ -11,6 +11,7 @@ namespace RussloWPF.Commands
 {
     public class RequestDeleteBook : ICommand
     {
+        private IBookItemsListManager Parent = null;
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
@@ -23,9 +24,13 @@ namespace RussloWPF.Commands
             if(parameter != null && parameter.GetType() == typeof(BookListItemViewModel))
             {
                 var model = (BookListItemViewModel)parameter;
-                Debug.WriteLine("RequestDeleteBook Command: author = {0}, title = {1}, description = {2}",
-                model.Author, model.Title, model.Description);
+                Parent?.RemoveItem(model);
             }
+        }
+
+        public RequestDeleteBook(IBookItemsListManager parent)
+        {
+            Parent = parent;
         }
 
     }

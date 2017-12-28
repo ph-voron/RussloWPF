@@ -12,12 +12,13 @@ namespace RussloWPF.Models.MVVM
     public class BookListItemViewModel : INotifyPropertyChanged
     {
         private BookListItem DataItem = null;
-        private ICommand _deleteItemCommand = new RequestDeleteBook();
+        private ICommand _deleteItemCommand = null;
         public event PropertyChangedEventHandler PropertyChanged;
         public BookListItemViewModel() { }
-        public BookListItemViewModel(BookListItem item)
+        public BookListItemViewModel(BookListItem item, IBookItemsListManager parent)
         {
             DataItem = item;
+            _deleteItemCommand = new RequestDeleteBook(parent);
         }
         //
         public string Title

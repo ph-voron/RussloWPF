@@ -25,7 +25,7 @@ namespace RussloWPF.Pages
     /// <summary>
     /// Логика взаимодействия для BriefcasePage.xaml
     /// </summary>
-    public partial class BriefcasePage : Page
+    public partial class BriefcasePage : Page, IBookItemsListManager
     {
         //
         private ObservableCollection<BookListItemViewModel> DataSource = new ObservableCollection<BookListItemViewModel>();
@@ -39,11 +39,11 @@ namespace RussloWPF.Pages
             PopulateNextPage();
         }
         //
-        public void ApplySearch(string text)
+        private void ApplySearch(string text)
         {
             SearchRequestResult = AppData.Inst()
                 .GetBooksList()
-                .Select(x => new BookListItemViewModel(x))
+                .Select(x => new BookListItemViewModel(x, this))
                 .ToList() ;
             if (text != null && text.Length > 0)
             { 
@@ -57,7 +57,22 @@ namespace RussloWPF.Pages
             }
         }
         //
-        public void PopulateNextPage()
+        private Task SearchAsync(string search)
+        {
+            return Task.Run(() =>
+            {
+                Thread.Sleep(300);
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    SearchRequestResult.Clear();
+                    DataSource.Clear();
+                }));
+                ApplySearch(search);
+                PopulateNextPage();
+            });
+        }
+        //
+        private void PopulateNextPage()
         {
             Application.Current.Dispatcher.Invoke(new Action(() =>
             {
@@ -68,26 +83,17 @@ namespace RussloWPF.Pages
             }));
         }
         //
-        public Task BeginNewSearch(string search)
+        public async void BeginNewSearch(string search)
         {
             var parent = (MainWindow)Window.GetWindow(this);
             parent.ShowProgressDialog(true);
-            return new Task(() =>
-            {
-                Thread.Sleep(300);
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    SearchRequestResult.Clear();
-                    DataSource.Clear();
-                }));
-                ApplySearch(search);
-                PopulateNextPage();
-                parent.ShowProgressDialog(false);
-            });
+            await SearchAsync(search);
+            parent.ShowProgressDialog(false);
         }
-
+        //
         private async void BooksList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.AddedItems.Count == 0) return;
             var parent = (IMainWindow)Window.GetWindow(this);
             var item = (BookListItemViewModel)e.AddedItems[0];
             parent.ShowProgressDialog(true);
@@ -112,14 +118,14 @@ namespace RussloWPF.Pages
 
         private void SearchSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            BeginNewSearch(SearchTextField.Text).Start();
+            BeginNewSearch(SearchTextField.Text);
         }
 
         private void SearchTextField_KeyUp(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Enter)
             {
-                BeginNewSearch(SearchTextField.Text).Start();
+                BeginNewSearch(SearchTextField.Text);
             }
         }
 
@@ -130,6 +136,11 @@ namespace RussloWPF.Pages
             //
             if(model != null) Debug.WriteLine("Button_Click: author = {0}, title = {1}, description = {2}", 
                 model.Author, model.Title, model.Description);
+        }
+
+        public void RemoveItem(BookListItemViewModel item)
+        {
+            DataSource.Remove(item);
         }
     }
 }
