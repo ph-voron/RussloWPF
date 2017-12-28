@@ -9,6 +9,10 @@ using System.Windows.Input;
 
 namespace RussloWPF.Models.MVVM
 {
+    /// <summary>
+    /// ViewModel на основе BookListItem, для передачи ее во View - элемент списка listView.
+    /// Содержит поле Command, для того, чтобы привязать действие к триггеру нажатия на кнопку удаления во View
+    /// </summary>
     public class BookListItemViewModel : INotifyPropertyChanged
     {
         private BookListItem DataItem = null;

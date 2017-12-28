@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace RussloWPF.Data
 {
+    /// <summary>
+    /// Всякие асинхронные обработки-заглушки
+    /// </summary>
     public class AppData
     {
         private static readonly AppData _instance = new AppData();

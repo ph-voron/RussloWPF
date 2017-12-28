@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace RussloWPF.Models.MVVM
 {
+    /// <summary>
+    /// ViewModel главного окна. Содержит комманды (ICommand) для связи с View - панель навигации, кнопка "назад" и т.д.
+    /// </summary>
     public class MainWindowViewModel : INotifyPropertyChanged
     {
         private IMainWindow Parent = null;

@@ -27,8 +27,16 @@ namespace RussloWPF.Pages
     /// </summary>
     public partial class BriefcasePage : Page, IBookItemsListManager
     {
-        //
+        /// <summary>
+        /// Используется в качестве источника данных для ListView. Нужно использовать именно ObservableCollection, т.к. содержит события,
+        /// при изменении списка элементов объекта DataSource, происходит и обновление списка визуальных элементов
+        /// элементы списка (BookListItemViewModel) - привязываются ListView к каждому соответствующему визуальному элементу, так же Command
+        /// визуальный элемент будет пытаться взыть при привязке именно из своей ViewModel
+        /// </summary>
         private ObservableCollection<BookListItemViewModel> DataSource = new ObservableCollection<BookListItemViewModel>();
+        /// <summary>
+        /// Просто буферный источник данных
+        /// </summary>
         private List<BookListItemViewModel> SearchRequestResult = new List<BookListItemViewModel>();
         //
         public BriefcasePage()
@@ -56,7 +64,10 @@ namespace RussloWPF.Pages
                     .ToList();
             }
         }
-        //
+        /// <summary>
+        /// Асинхронный "запрос"
+        /// </summary>
+
         private Task SearchAsync(string search)
         {
             return Task.Run(() =>
@@ -82,7 +93,10 @@ namespace RussloWPF.Pages
                 }
             }));
         }
-        //
+        /// <summary>
+        /// async\await, все дела
+        /// </summary>
+        /// <param name="search"></param>
         public async void BeginNewSearch(string search)
         {
             var parent = (MainWindow)Window.GetWindow(this);
@@ -137,7 +151,10 @@ namespace RussloWPF.Pages
             if(model != null) Debug.WriteLine("Button_Click: author = {0}, title = {1}, description = {2}", 
                 model.Author, model.Title, model.Description);
         }
-
+        /// <summary>
+        /// Метод, который будет пытаться вызвать Command, привязанный к визуальному элементу списка через его ViewModel
+        /// </summary>
+        /// <param name="item"></param>
         public void RemoveItem(BookListItemViewModel item)
         {
             DataSource.Remove(item);

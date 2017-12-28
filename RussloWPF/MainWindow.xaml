@@ -12,97 +12,24 @@
         Title="MainWindow" Height="768" Width="1280">
     <Window.Resources>
 
-        <sys:Double x:Key="DrawerMenuWidth">320</sys:Double>
-
-        <Style TargetType="StackPanel" x:Key="LoadingSpinnerPanel">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="Width" Value="240"/>
-            <Setter Property="Height" Value="60"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect
-                        ShadowDepth="4"
-                        Direction="330"
-                        Color="Black"
-                        Opacity="0.5"
-                       BlurRadius="20"/>
-
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="Grid" x:Key="BlurOverlay">
-            <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}"/>
-            <Setter Property="Opacity" Value="0.3"/>
-        </Style>
-
-        <Style TargetType="StackPanel" x:Key="NavigationMenuDrawerStyle">
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Width" Value="320"/>
-            <Setter Property="Orientation" Value="Vertical"/>
-            <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect
-                        ShadowDepth="4"
-                        Direction="330"
-                        Color="Black"
-                        Opacity="0.5"
-                       BlurRadius="20"/>
-
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="Button" x:Key="DrawerMenuItemStyle">
-            <Style.Setters>
-                <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}" />
-                <Setter Property="FontSize" Value="24" />
-                <Setter Property="Height" Value="48" />
-                <Setter Property="BorderThickness" Value="0"></Setter>
-                <Setter Property="Margin" Value="10,10,10,5" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Background="{TemplateBinding Background}" 
-                                BorderBrush="{x:Null}" 
-                                BorderThickness="0">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style.Setters>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="true">
-                    <Setter Property = "Background" Value="White"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <Style TargetType="TextBlock" x:Key="DrawerMenuItemTextStyle">
-            <Setter Property="TextAlignment" Value="Center" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="Margin" Value="20, 0, 0, 0" />
-        </Style>
-        
     </Window.Resources>
+    <!--Аналог тулбара-->
     <DockPanel 
         LastChildFill="True">
+        <!--Статическая привязка стиля-->
         <DockPanel 
             Style="{StaticResource StyleMainToolbar}"
             Panel.ZIndex="100"
             LastChildFill="False"
             DockPanel.Dock="Top">
 
+            <!--Высота как у родительского элемента-->
             <StackPanel 
                 Height="{Binding ActualHeight, ElementName=parentElementName}"
                 Orientation="Horizontal"
                 DockPanel.Dock="Left">
+
+                <!--Кнопка показа меню навигации-->
                 <Button x:Name="DrawerMenuButton" Click="DrawerMenuButton_Click" Style="{StaticResource ButtonToolbar}">
                     <Button.Content>
                         <Image 
@@ -114,6 +41,7 @@
                     </Button.Content>
                 </Button>
 
+                <!--Кнопка "вернуться назад"-->
                 <Button 
                     x:Name="NavigateBackButton"
                     Click="NavigateBackButton_Click"
@@ -128,6 +56,7 @@
                     </Button.Content>
                 </Button>
 
+                <!--Заголовок-->
                 <TextBlock 
                     x:Name="CurrentPageTitleText"
                     Height="{Binding ActualHeight, ElementName=parentElementName}"
@@ -144,6 +73,7 @@
 
             </StackPanel>
 
+            <!--Панель быстрого доступа к элементам и доп. меню-->
             <StackPanel 
                 Orientation="Horizontal"
                 DockPanel.Dock="Right"
@@ -173,14 +103,17 @@
         </DockPanel>
         <Grid DockPanel.Dock="Bottom">
 
+            <!--Контейнер для отображения страниц-->
             <Frame x:Name="MainContainer" NavigationUIVisibility="Hidden"></Frame>
 
+            <!--Перекрывающий серый layout-->
             <Grid 
                 Visibility="Collapsed"
                 x:Name="ContentOverlayShading"
                 Style="{StaticResource BlurOverlay}">
             </Grid>
 
+            <!--Панель навигации, аналог NavigationDrawer в android-->
             <StackPanel 
                 x:Name="DrawerMenuLayout"
                 Margin="{StaticResource NavigationDrawerClosedMargin}"
@@ -196,6 +129,9 @@
                         Библиотека русского слова
                     </TextBlock>
                 </StackPanel>
+                <!--Кнопка навигации, реализующая шаблон Command через Model-View-ViewModel. Через свойство Command происходит привязка 
+                (Binding) к отдельной команде, указанной в качестве поля типа ICommand в ViewModel, переданной в MainWindow, как свойство
+                DataContext.-->
                 <Button Style="{StaticResource DrawerMenuItemStyle}" Command="{Binding NavigateToLoginPageCommand}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Width="{StaticResource DrawerMenuWidth}">
@@ -209,6 +145,7 @@
                     </Button.Content>
                 </Button>
 
+                <!--Так же реализация Command через MVVM-->
                 <Button Style="{StaticResource DrawerMenuItemStyle}" Command="{Binding NavigateToBriecaseCommand}">
                     <Button.Content>
                         <StackPanel Orientation="Horizontal" Width="{StaticResource DrawerMenuWidth}">
@@ -236,11 +173,13 @@
                 </Button>
 
             </StackPanel>
-            
+
+            <!--Отдельный перекрывающий индикатор выполнения долгого действия (загрузка, обработка, подготовка)-->
             <StackPanel 
                 Visibility="Collapsed"
                 x:Name="LoadingNotification"
                 Style="{StaticResource LoadingSpinnerPanel}">
+                <!--Используется анимированный компонент FontAwesome.WPF-->
                 <fa:ImageAwesome 
                     Margin="5"
                     Icon="CircleOutlineNotch" 

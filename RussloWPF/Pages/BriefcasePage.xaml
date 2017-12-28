@@ -11,82 +11,9 @@
       Title="BriefcasePage">
     <Page.Resources>
 
-        <sys:Double x:Key="BookListItemWidth">360</sys:Double>
-        <sys:Double x:Key="BookListItemHeight">180</sys:Double>
-
-        <ControlTemplate TargetType="Button" x:Key="DeleteButtonTemplate">
-            <Border x:Name="controlBorder" CornerRadius="24" BorderThickness="0"
-                    Background="White" Height="48" Width="48" >
-                <ContentControl Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <Image Source="/Images/ic_delete_book.png"></Image>
-                </ContentControl>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="controlBorder" Property="Background" Value="{StaticResource BrushHighlightGray}" />
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-
-        <Style TargetType="Button" x:Key="DeleteButtonStyle">
-            <Style.Setters>
-                <Setter Property="Template" Value="{StaticResource DeleteButtonTemplate}"/>
-                <Setter Property="Width" Value="48"/>
-                <Setter Property="Height" Value="48"/>
-                <Setter Property="VerticalAlignment" Value="Top"/>
-                <Setter Property="HorizontalAlignment" Value="Right"/>
-            </Style.Setters>
-            
-        </Style>
-
-        <Style TargetType="TextBlock" x:Key="BookListItemHeader1">
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="Gray"/>
-            <Setter Property="Margin" Value="5, 5, 0, 0"/>
-        </Style>
-
-
-        <Style TargetType="TextBlock" x:Key="BookListItemHeader2">
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="TextTrimming" Value="WordEllipsis"/>
-            <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
-            <Setter Property="LineHeight" Value="22"/>
-            <Setter Property="MaxHeight" Value="56"/>
-            <Setter Property="FontSize" Value="20"/>
-            <Setter Property="FontWeight" Value="Medium"/>
-            <Setter Property="Margin" Value="5, 5, 0, 0"/>
-        </Style>
-
-        <Style TargetType="TextBlock" x:Key="BookListItemHeader3">
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="Foreground" Value="Gray"/>
-            <Setter Property="Margin" Value="5, 10, 0, 0"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-            <Setter Property="TextTrimming" Value="WordEllipsis"/>
-            <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
-            <Setter Property="LineHeight" Value="15"/>
-            <Setter Property="MaxHeight" Value="60"/>
-        </Style>
-
-        <Style TargetType="Grid" x:Key="BookListItemStyle">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Effect">
-                <Setter.Value>
-                    <DropShadowEffect
-                        ShadowDepth="4"
-                        Direction="280"
-                        Color="Black"
-                        Opacity="0.5"
-                       BlurRadius="10"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="ListBoxItem" x:Key="ContainerStyle">
-            <Setter Property="Margin" Value="10"/>
-        </Style>
-
+        <!--Для реализации DataBinding посредством разметки, нужно указать шаблон отдельного элемента настраиваемого списка. 
+        Динамический список сам устанавливает в качестве контекста данных визуальному элементу соответствующую ViewModel, поэтому
+        можно использовать DataBinding для связи свойства View и его ViewModel. Так же Command берется именно из ViewModel-->
         <DataTemplate x:Key="ListItemTemplate">
             <Grid Style="{StaticResource BookListItemStyle}" 
                   Width="{StaticResource BookListItemWidth}" 
@@ -107,6 +34,7 @@
                             <RowDefinition Height="Auto"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
+                        <!--Поле Text привязывается к полю Author во ViewModel-->
                         <TextBlock Grid.Row="0" Style="{StaticResource BookListItemHeader1}" Text="{Binding Path=Author}"></TextBlock>
                         <TextBlock Grid.Row="1" Style="{StaticResource BookListItemHeader2}" Text="{Binding Path=Title}"></TextBlock>
                         <TextBlock Grid.Row="2" Style="{StaticResource BookListItemHeader3}" Text="{Binding Path=Description}"></TextBlock>
@@ -116,16 +44,24 @@
                     <Image  Source="/Images/ic_check_black_48dp_1x.png" Width="30" Height="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10"></Image>
 
                 </Grid>
+                <!--Command вызывается именно из отдельной ViewModel с которой связан визуальный элемент-->
                 <Button 
-                    Click="Button_Click"
                     Command="{Binding DeleteItemCommand}"
                     CommandParameter="{Binding}"
                     Style="{StaticResource DeleteButtonStyle}"></Button>
             </Grid>
         </DataTemplate>
+
     </Page.Resources>
     <Grid>
 
+        <!--Динамический список с поддержкой DataBinding через разметку.
+        ItemContainerStyle - связывает с шаблоном визуального элемента
+        VirtualizingStackPanel - включает виртуализацию эолементов в списке, то есть позволяет экономить память 
+        путем повторного использования уже видимых визуальных элементов и не выделяет память под новые визуальные элементы.
+        На ScrollChanged сидит функционал подгрузки элементов при прокрутке вниз.
+        ПРИМЕЧАНИЕ: в данной реализации не работает виртаулизация, так как в списке выводится несколько колонок с переносом элементов по горизонтали
+        по умолчанию список не умеет это оптимизировать.-->
         <ListBox x:Name="BooksList" 
                  Margin="5, 55, 5, 0"
                  Padding="5"
@@ -137,24 +73,27 @@
                  SelectionChanged="BooksList_SelectionChanged"
                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
+                <!--Так можно изменить шаблон панели элементов-->
                 <ItemsPanelTemplate>
+                    <!--Добавляет WrapPanel, что позволяет распологать элементы по горизонтали с переносом на следующую строку-->
                     <WrapPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
             
         </ListBox>
 
+        <!--Панель элементов поиска-->
         <Grid Background="White" VerticalAlignment="Top" Height="45" Margin="5">
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Setter Property="Effect">
                         <Setter.Value>
                             <DropShadowEffect
-                        ShadowDepth="4"
-                        Direction="0"
-                        Color="Black"
-                        Opacity="0.5"
-                       BlurRadius="20"/>
+                                ShadowDepth="4"
+                                Direction="0"
+                                Color="Black"
+                                Opacity="0.5"
+                                BlurRadius="20"/>    
                         </Setter.Value>
                     </Setter>
                 </Style>

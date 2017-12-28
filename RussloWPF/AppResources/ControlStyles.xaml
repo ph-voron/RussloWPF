@@ -1,0 +1,254 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:RussloWPF.AppResources"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--Стиль визуального элемента, устанавливается или на все элементы указанного типа (если без Key) или для элементов указанного типа
+    по явному казанию Key-->
+    <Style TargetType="StackPanel" x:Key="LoadingSpinnerPanel">
+        <!--Установка значений отдельных полей-->
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="Width" Value="240"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}"/>
+        <!--Установка отдельного эффекта (тени)-->
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                        ShadowDepth="4"
+                        Direction="330"
+                        Color="Black"
+                        Opacity="0.5"
+                       BlurRadius="20"/>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Grid" x:Key="BlurOverlay">
+        <!--Статическая привязка значения по его Key-->
+        <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}"/>
+        <Setter Property="Opacity" Value="0.3"/>
+    </Style>
+
+    <Style TargetType="StackPanel" x:Key="NavigationMenuDrawerStyle">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Width" Value="320"/>
+        <Setter Property="Orientation" Value="Vertical"/>
+        <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                        ShadowDepth="4"
+                        Direction="330"
+                        Color="Black"
+                        Opacity="0.5"
+                       BlurRadius="20"/>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="DrawerMenuItemStyle">
+        <Style.Setters>
+            <Setter Property="Background" Value="{StaticResource BrushPrimary2Color}" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Height" Value="48" />
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Margin" Value="10,10,10,5" />
+            <!--Переопределение шаблона элемента требуется для задания собственных действий на движение\нажатие мыши по его визуальной области-->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{x:Null}" 
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+        <!--Задание триггеров изменнения стиля на действие мышью (мышь на области элемента)-->
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <!--Смена фона скопки по триггеру-->
+                <Setter Property = "Background" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="DrawerMenuItemTextStyle">
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="20, 0, 0, 0" />
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="StyleTitle1">
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
+    <Style TargetType="DockPanel" x:Key="StyleMainToolbar">
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Height" Value="36"/>
+        <Setter Property="Background" Value="{StaticResource BrushPrimary1Color}"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                        ShadowDepth="4"
+                        Direction="180"
+                        Color="Black"
+                        Opacity="0.5"
+                       BlurRadius="20"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="ButtonToolbar">
+        <Style.Setters>
+            <Setter Property="Background" Value="{StaticResource BrushPrimary1Color}" />
+            <Setter Property="Width" Value="36" />
+            <Setter Property="Height" Value="36" />
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{x:Null}" 
+                                BorderThickness="0">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property = "Background" Value="{StaticResource BrushPrimary3Color}"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="true">
+                <Setter Property = "Foreground" Value="{StaticResource BrushPrimary2Color}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="DialogHeader1">
+        <Setter Property="Margin" Value="20"/>
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
+    <Style TargetType="DockPanel" x:Key="ContentPanel">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="400"/>
+        <Setter Property="Height" Value="400"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                        ShadowDepth="4"
+                        Direction="330"
+                        Color="Black"
+                        Opacity="0.5"
+                       BlurRadius="20"/>
+
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="SubmitButton">
+        <Setter Property="Background" Value="{StaticResource BrushPrimary3Color}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource BrushPrimary1Color}"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{StaticResource BrushPrimary1Color}" 
+                                BorderThickness="2">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource BrushPrimary1Color}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    <!--BriefcasePage-->
+
+    <!--Стиль кнопки удаления книги из портфеля - основан на элементе Button с собственным шаблоном с иконкой.
+    Для нажимаемых элементов за основу нужно брать именно Button, потому что Grid или другие элементы укладки 
+    такого события по умолчанию не содержат в принципе -->
+    <Style TargetType="Button" x:Key="DeleteButtonStyle">
+        <Style.Setters>
+            <Setter Property="Template" Value="{StaticResource DeleteButtonTemplate}"/>
+            <Setter Property="Width" Value="48"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style.Setters>
+
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="BookListItemHeader1">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="Margin" Value="5, 5, 0, 0"/>
+    </Style>
+
+
+    <Style TargetType="TextBlock" x:Key="BookListItemHeader2">
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+        <Setter Property="LineHeight" Value="22"/>
+        <Setter Property="MaxHeight" Value="56"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="Margin" Value="5, 5, 0, 0"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="BookListItemHeader3">
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Foreground" Value="Gray"/>
+        <Setter Property="Margin" Value="5, 10, 0, 0"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="TextTrimming" Value="WordEllipsis"/>
+        <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
+        <Setter Property="LineHeight" Value="15"/>
+        <Setter Property="MaxHeight" Value="60"/>
+    </Style>
+
+    <Style TargetType="Grid" x:Key="BookListItemStyle">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect
+                        ShadowDepth="4"
+                        Direction="280"
+                        Color="Black"
+                        Opacity="0.5"
+                       BlurRadius="10"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ListBoxItem" x:Key="ContainerStyle">
+        <Setter Property="Margin" Value="10"/>
+    </Style>
+
+</ResourceDictionary>

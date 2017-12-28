@@ -10,6 +10,7 @@
       Title="ReaderCEFPage">
 
     <Grid>
+        <!--Компонент Хрониума для рендеринга html-->
         <cefSharp:ChromiumWebBrowser x:Name="Browser"  Loaded="ChromiumWebBrowser_Loaded">
         </cefSharp:ChromiumWebBrowser>
     </Grid>

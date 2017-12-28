@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RussloWPF.Models
 {
+    /// <summary>
+    /// Чистая модель "базы данных" (Model)
+    /// </summary>
     public class BookListItem: ICloneable
     {
         public string Author { get; set; }

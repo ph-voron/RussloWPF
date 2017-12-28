@@ -40,7 +40,9 @@ namespace RussloWPF
                 AnimateNavigationDrawer();
             }
         }
-        //
+        /// <summary>
+        /// Проигрывает анимацию смены визуальных состояний боковой панели навигации
+        /// </summary>
         private void AnimateNavigationDrawer()
         {
             var buttonAnimation = new ThicknessAnimation();
@@ -53,6 +55,7 @@ namespace RussloWPF
             buttonAnimation.From = new Thickness(startMargin, 0, 0, 0);
             buttonAnimation.To = new Thickness(endMargin, 0, 0, 0);
             buttonAnimation.Duration = new Duration(new TimeSpan(0, 0, 0, 0, 300));
+            //аналог интерполяторов анимации android
             buttonAnimation.EasingFunction = new ExponentialEase();
             //
             buttonAnimation.Completed += (sndr, evnt) =>

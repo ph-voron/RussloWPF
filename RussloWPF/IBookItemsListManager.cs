@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace RussloWPF
 {
+    /// <summary>
+    /// Интерфейс для связи Command-View-ViewModel-Presenter
+    /// </summary>
     public interface IBookItemsListManager
     {
         void RemoveItem(BookListItemViewModel item);

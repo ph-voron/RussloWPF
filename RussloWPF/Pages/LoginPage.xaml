@@ -9,6 +9,7 @@
       Title="LoginPage">
 
     <Page.Resources>
+        
         <Style TargetType="TextBox" x:Key="TextBox1">
             <Setter Property="FontSize" Value="20"/>
             <Setter Property="Margin" Value="30, 0, 30, 0"/>
@@ -28,14 +29,14 @@
             <Setter Property="Margin" Value="30, 20, 30, 0"/>
         </Style>
 
-
-
     </Page.Resources>
 
     <Grid>
+        <!--Масштабированный фон задан через кисть-->
         <Grid.Background>
             <ImageBrush ImageSource="/Images/wallpaper_01.png" Stretch="UniformToFill"/>
         </Grid.Background>
+        <!--Поля ввода, да кнопка, ничего сложного-->
         <DockPanel 
             LastChildFill="True"
             Style="{StaticResource ContentPanel}">
