@@ -1,0 +1,67 @@
+﻿<Page x:Class="RussloWPF.Pages.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:RussloWPF.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="768" d:DesignWidth="1024"
+      Title="LoginPage">
+
+    <Page.Resources>
+        <Style TargetType="TextBox" x:Key="TextBox1">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="30, 0, 30, 0"/>
+            <Setter Property="BorderThickness" Value="0 0 0 2"/>
+        </Style>
+        
+        <Style TargetType="PasswordBox" x:Key="PasswordBox">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="30, 0, 30, 0"/>
+            <Setter Property="BorderThickness" Value="0 0 0 2"/>
+            <Setter Property="PasswordChar" Value="*"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="TextHeaderSmall">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Margin" Value="30, 20, 30, 0"/>
+        </Style>
+
+
+
+    </Page.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Images/wallpaper_01.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <DockPanel 
+            LastChildFill="True"
+            Style="{StaticResource ContentPanel}">
+            <TextBlock DockPanel.Dock="Top" Style="{StaticResource DialogHeader1}" Height="Auto">Авторизация</TextBlock>
+
+            <Button 
+                Style="{StaticResource SubmitButton}"
+                Width="120" 
+                Height="36"
+                DockPanel.Dock="Bottom" 
+                HorizontalAlignment="Right"
+                Margin="20"
+                Click="Button_Click">
+                Войти
+
+            </Button>
+            <Grid>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource TextHeaderSmall}">Логин</TextBlock>
+                    <TextBox x:Name="Login" Style="{StaticResource TextBox1}"></TextBox>
+                    <TextBlock  Style="{StaticResource TextHeaderSmall}">Пароль</TextBlock>
+                    <PasswordBox x:Name="Password" Style="{StaticResource PasswordBox}"></PasswordBox>
+                </StackPanel>
+            </Grid>
+            
+        </DockPanel>
+        
+    </Grid>
+</Page>

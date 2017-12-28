@@ -1,0 +1,130 @@
+﻿<Application x:Class="RussloWPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:RussloWPF"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Color x:Key="ColorPrimary">#1e88e5</Color>
+        <Color x:Key="ColorLightGray">#dadada</Color>
+        <Color x:Key="ColorBlueControls">#448aff</Color>
+        <Color x:Key="ColorPrimaryGreen">#7ee74d</Color>
+        <Color x:Key="ColorHighlightGray">#faf3f3</Color>
+
+        <Thickness x:Key="NavigationDrawerClosedMargin">-350, 0, 0, 0</Thickness>
+
+        <SolidColorBrush x:Key="BrushPrimary1Color" Color="{StaticResource ColorPrimary}"></SolidColorBrush>
+        <SolidColorBrush x:Key="BrushPrimary2Color" Color="{StaticResource ColorLightGray}"></SolidColorBrush>
+        <SolidColorBrush x:Key="BrushPrimary3Color" Color="{StaticResource ColorBlueControls}"></SolidColorBrush>
+        <SolidColorBrush x:Key="BrushPrimary4Color" Color="{StaticResource ColorPrimaryGreen}"></SolidColorBrush>
+        <SolidColorBrush x:Key="BrushHighlightGray" Color="{StaticResource ColorHighlightGray}"></SolidColorBrush>
+
+        <Style TargetType="TextBlock" x:Key="StyleTitle1">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+
+        <Style TargetType="DockPanel" x:Key="StyleMainToolbar">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="Background" Value="{StaticResource BrushPrimary1Color}"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect
+                        ShadowDepth="4"
+                        Direction="180"
+                        Color="Black"
+                        Opacity="0.5"
+                       BlurRadius="20"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="ButtonToolbar">
+            <Style.Setters>
+                <Setter Property="Background" Value="{StaticResource BrushPrimary1Color}" />
+                <Setter Property="Width" Value="36" />
+                <Setter Property="Height" Value="36" />
+                <Setter Property="BorderThickness" Value="0"></Setter>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{x:Null}" 
+                                BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style.Setters>
+            
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property = "Background" Value="{StaticResource BrushPrimary3Color}"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="true">
+                    <Setter Property = "Foreground" Value="{StaticResource BrushPrimary2Color}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="DialogHeader1">
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+
+        <Style TargetType="DockPanel" x:Key="ContentPanel">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="Width" Value="400"/>
+            <Setter Property="Height" Value="400"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect
+                        ShadowDepth="4"
+                        Direction="330"
+                        Color="Black"
+                        Opacity="0.5"
+                       BlurRadius="20"/>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="SubmitButton">
+            <Setter Property="Background" Value="{StaticResource BrushPrimary3Color}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BrushPrimary1Color}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{StaticResource BrushPrimary1Color}" 
+                                BorderThickness="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{StaticResource BrushPrimary1Color}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Storyboard x:Key="DrawlerExpandAnimation">
+            <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                <SplineThicknessKeyFrame KeyTime="00:00:00" Value="-350,0,0,0" />
+                <SplineThicknessKeyFrame KeyTime="00:00:03" Value="0,0,0,0" />
+            </ThicknessAnimationUsingKeyFrames>
+        </Storyboard>
+
+    </Application.Resources>
+</Application>
